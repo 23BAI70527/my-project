@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Filter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #F5FAE1;
+      color: #896C6C;
+    }
+
+    #heading {
+      text-align: center;
+      margin: 25px 0;
+      font-size: 38px;
+      color: #896C6C;
+      text-shadow: 2px 2px 0 #E5BEB5;
+    }
+
+    #filter, #search {
+      font-size: 16px;
+      padding: 8px;
+      border: 2px solid #896C6C;
+      border-radius: 8px;
+      background-color: #EEE6CA;
+      color: #896C6C;
+    }
+
+    #filter {
+      cursor: pointer;
+    }
+
+    #cat {
+      font-weight: bold;
+      color: #896C6C;
+    }
+
+    .product-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 15px;
+      justify-items: center;
+    }
+
+    .product {
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 4px 4px 10px rgba(137, 108, 108, 0.3);
+      transition: transform 0.25s ease, background 0.2s, color 0.2s;
+      font-weight: bold;
+    }
+
+    /* Category colors with hover effects */
+    .product[data-category="shoes"] {
+      background: #896C6C;
+      color: #F5FAE1;
+    }
+    .product[data-category="shoes"]:hover {
+      background: #E5BEB5;
+      color: #896C6C;
+      transform: scale(1.08);
+    }
+
+    .product[data-category="clothing"] {
+      background: #E5BEB5;
+      color: #896C6C;
+    }
+    .product[data-category="clothing"]:hover {
+      background: #896C6C;
+      color: #F5FAE1;
+      transform: scale(1.08);
+    }
+
+    .product[data-category="gadgets"] {
+      background: #EEE6CA;
+      color: #896C6C;
+    }
+    .product[data-category="gadgets"]:hover {
+      background: #E5BEB5;
+      color: #896C6C;
+      transform: scale(1.08);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .border {
+      border: 3px solid #896C6C;
+      width: 80%;
+      max-width: 900px;
+      margin: auto;
+      padding: 25px;
+      background: #EEE6CA;
+      border-radius: 20px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    #noResult {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+      color: #896C6C;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="border">
+    <h1 id="heading">Product List</h1>
+
+    <!-- Filters and Search -->
+    <div class="controls">
+      <div id="cat">Category:</div>
+      <select id="filter">
+        <option value="all">All</option>
+        <option value="shoes">Shoes</option>
+        <option value="clothing">Clothing</option>
+        <option value="gadgets">Gadgets</option>
+      </select>
+      <input type="text" id="search" placeholder="Search products..."/>
+    </div>
+
+    <br><br>
+    <!-- Product Grid -->
+    <div class="product-list" id="productList">
+      <div class="product" data-category="shoes"><h3>Running Shoes</h3></div>
+      <div class="product" data-category="gadgets"><h3>Soundbar</h3></div>
+      <div class="product" data-category="shoes"><h3>Casual Sneakers</h3></div>
+      <div class="product" data-category="clothing"><h3>Formal Shirt</h3></div>
+      <div class="product" data-category="gadgets"><h3>Smartwatch</h3></div>
+      <div class="product" data-category="clothing"><h3>T-Shirt</h3></div>
+      <div class="product" data-category="gadgets"><h3>Smartphone</h3></div>
+      <div class="product" data-category="gadgets"><h3>Wireless Earbuds</h3></div>
+      <div class="product" data-category="clothing"><h3>Jeans</h3></div>
+      <div class="product" data-category="shoes"><h3>Loafers</h3></div>
+    </div>
+
+    <div id="noResult">🚫 No products found</div>
+
+    <script>
+      const filter = document.getElementById("filter");
+      const search = document.getElementById("search");
+      const products = document.querySelectorAll(".product");
+      const noResult = document.getElementById("noResult");
+
+      function applyFilters() {
+        const sel = filter.value.toLowerCase();
+        const term = search.value.toLowerCase();
+        let visibleCount = 0;
+
+        products.forEach(p => {
+          const matchCategory = sel === "all" || p.dataset.category === sel;
+          const matchText = p.textContent.toLowerCase().includes(term);
+          const isVisible = matchCategory && matchText;
+          p.classList.toggle("hidden", !isVisible);
+          if (isVisible) visibleCount++;
+        });
+
+        noResult.style.display = visibleCount === 0 ? "block" : "none";
+      }
+
+      filter.addEventListener("change", applyFilters);
+      search.addEventListener("input", applyFilters);
+    </script>
+  </div>
+</body>
+</html>

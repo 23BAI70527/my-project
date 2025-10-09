@@ -1,0 +1,74 @@
+1. FEATURE: Page Layout
+Requirement:
+The page should provide a structured layout consisting of a heading, a text input box, and a live counter display.
+Functionality:
+A header (h2) displays the title "Live Character Counter".
+A textarea is available for typing text.
+A live counter (p with span) updates dynamically as users type.
+A bordered box (.outerBox) neatly groups all elements.
+
+2. FEATURE: Live Character Counter
+Requirement:
+The number of characters typed should update instantly without refreshing the page.
+Functionality:
+A JavaScript input event listener monitors typing activity.
+Character length is calculated using .value.length.
+The count is updated in real-time inside the <span> element.
+
+CSS Styling Breakdown
+
+1. ELEMENT:.outerBox (Main Container)
+Purpose: Encapsulates the title, input box, and character counter inside a styled border.
+Properties & Effects:
+border: 3px solid black; → Thick black border around the container.
+padding: 20 → Creates spacing between border and inner content.
+width: 420px; → Fixed width for consistent layout.
+margin: 20px; → Adds space outside the box, separating it from page edges.
+
+2. ELEMENT: textarea (User Input Box)
+Purpose: Allows the user to type text that will be counted.
+Properties & Effects:
+width: 100%; → Expands to match container width.
+height: 100px; → Provides space for multiple lines of input.
+font-size: 14px; → Readable font size for typing.
+
+3. ELEMENT:h2(Title Heading)
+Purpose:Displays the title of the feature.
+Properties & Effects:
+Default bold, medium-sized heading text.
+Positioned at the top inside .outerBox.
+
+4. ELEMENT: p and span (Counter Display)
+Purpose: Show the number of characters typed in the textarea.
+Properties & Effects:
+Displays text in the form: "Characters: 0".
+<span> (id="count") dynamically updates via JavaScript.
+
+JavaScript Functionality Breakdown
+
+1. ELEMENT: document.getElementById("myText")
+Purpose: Selects the textarea where users type.
+Effect: Enables JavaScript to monitor text input.
+
+2. ELEMENT: document.getElementById("count")
+Purpose: Selects the span inside <p> that displays the live count.
+Effect: Allows real-time updates of the displayed number.
+
+3. ELEMENT: area.addEventListener("input", function(){...})
+Purpose: Attaches an event listener to the textarea.
+Effect: Runs code every time the user types, deletes, or pastes text.
+
+4. ELEMENT: area.value.length
+Purpose: Gets the number of characters typed inside the textarea.
+Effect: Produces the count value.
+
+5. ELEMENT: counter.textContent = area.value.length;
+Purpose: Updates the <span> element with the latest character count.
+Effect: Displays live feedback below the textarea.
+
+LEARNING OUTCOMES
+1.How to structure a simple webpage with a heading, input, and counter.
+2.How to style layouts using margin, padding, and border.
+3.How to access DOM elements using getElementById.
+4.How to use event listeners (input) for real-time interactions.
+5.How to dynamically update webpage content using .textContent.

@@ -1,9 +1,9 @@
-name: CI/CD Pipeline
+name: CI/CD Pipeline for Experiment-26
 
 on:
   push:
     branches:
-      - main  # Triggers workflow on every push to main branch
+      - main
 
 jobs:
   build-and-test:
@@ -16,48 +16,28 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18  # Adjust Node version as needed
+          node-version: 18
+
+      - name: Navigate to Project Directory
+        run: cd clouddeployment/experiment-26
 
       - name: Install Dependencies
-        run: npm install
+        run: |
+          cd clouddeployment/experiment-26
+          npm ci
 
       - name: Run Tests
-        run: npm test
+        run: |
+          cd clouddeployment/experiment-26
+          npm test
 
       - name: Build Project
-        run: npm run build
+        run: |
+          cd clouddeployment/experiment-26
+          npm run build
 
-      # Optional: Upload build artifacts (for debugging or deployment)
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build
-          path: build/
-
-  # Optional Deployment Job
-  deploy:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'  # Only deploy from main branch
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Build Project
-        run: npm run build
-
-      # Example: Deploy to GitHub Pages
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          name: experiment-26-build
+          path: clouddeployment/experiment-26/build/
